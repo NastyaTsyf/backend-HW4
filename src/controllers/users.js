@@ -13,11 +13,17 @@ const getUser = (request, response) => {
 
 const createUser = (request, response) => {
     //Create new user
-    return User.create({ ...request.body }).then(
-        (user) => { response.status(201).send(user) }
-    )
-    // response.status(201);
-    // response.send(request.body);
+    // return User.create({ ...request.body }).then(
+    //     (user) => { response.status(201).send(user) }
+    // )
+    const data = request.body;
+    User.create(data)
+        .then(user => {
+            response.status(201).send(user);
+        })
+        .catch(e => {
+            response.status(500).send(e.message);
+        });
 }
 
 const updateUser = (request, response) => {
